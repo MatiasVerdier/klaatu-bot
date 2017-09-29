@@ -12,7 +12,7 @@ module.exports = class Gif extends Command {
       args: [
         {
           key: 'search',
-          prompt: 'Debes ingresasar un termino de búsqueda',
+          prompt: 'Debes ingresar un término de búsqueda',
           type: 'string'
         }
       ]
@@ -30,7 +30,7 @@ module.exports = class Gif extends Command {
       })
 
       const gifData = response.data.data[0]
-      return msg.channel.send(gifData ? gifData.embed_url : 'No se encontro ningun gif')
+      return msg.channel.send(gifData ? gifData.embed_url : 'No se encontró ningún gif :( ')
     } catch (error) {
       console.log(error)
     }
