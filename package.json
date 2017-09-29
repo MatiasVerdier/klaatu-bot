@@ -1,0 +1,28 @@
+{
+  "name": "klaatu-bot",
+  "version": "0.1.0",
+  "description": "Discord bot",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "lint": "standard",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Matias Verdier <verdier.matias@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "discord.js": "^11.2.1",
+    "discord.js-commando": "^0.9.0",
+    "dotenv": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=7.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1",
+    "standard": "^10.0.3"
+  }
+}
