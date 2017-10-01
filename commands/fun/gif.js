@@ -1,6 +1,7 @@
 const { Command } = require('discord.js-commando')
 const axios = require('axios')
 const GIPHY_API_ROOT = 'https://api.giphy.com'
+const firebaseApp = require('../../firebaseApp')
 
 module.exports = class Gif extends Command {
   constructor (client) {
@@ -20,6 +21,8 @@ module.exports = class Gif extends Command {
   }
 
   async run (msg, {search}) {
+    const { guild } = msg.channel
+
     try {
       const response = await axios.get(`${GIPHY_API_ROOT}/v1/gifs/search`, {
         params: {
@@ -30,7 +33,15 @@ module.exports = class Gif extends Command {
       })
 
       const gifData = response.data.data[0]
-      return msg.channel.send(gifData ? gifData.embed_url : 'No se encontró ningún gif :( ')
+      const reply = gifData ? gifData.embed_url : 'No se encontró ningún gif :( '
+
+      firebaseApp.database().ref(`/guilds/${guild.id}/gifs`).push({
+        search,
+        timestamp: new Date().getTime(),
+        reply
+      })
+
+      return msg.channel.send(reply)
     } catch (error) {
       console.log(error)
     }

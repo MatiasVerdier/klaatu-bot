@@ -1,6 +1,7 @@
 require('dotenv').config()
 const path = require('path')
 const { CommandoClient } = require('discord.js-commando')
+const firebaseApp = require('./firebaseApp')
 
 const bot = new CommandoClient({
   owner: process.env.SERVER_OWNER
@@ -11,18 +12,18 @@ bot.registry
   .registerGroups([
     ['fun', 'Comandos divertidos'],
     ['information', 'información de diversas fuentes'],
-    ['services', 'Comandos para usar servicios externos']
+    ['settings', 'Comandos de configuración del servidor']
   ])
   .registerCommandsIn(path.join(__dirname, 'commands'))
 
 bot.on('ready', () => {
   console.log(`Logged in as ${bot.user.tag}!`)
 
-  bot.generateInvite(['ADMINISTRATOR'])
-    .then(link => {
-      console.log(`Generated bot invite link: ${link}`)
+  firebaseApp.auth().signInWithEmailAndPassword(process.env.FIREBASE_BOT_EMAIL, process.env.FIREBASE_BOT_PASSWORD)
+    .then(() => {
+      console.log('firebase login')
     })
-    .catch(e => console.log(e.stack))
+    .catch(error => console.log(error))
 })
 
 bot.on('guildMemberAdd', member => {
