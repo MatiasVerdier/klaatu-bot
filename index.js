@@ -33,4 +33,20 @@ bot.on('guildMemberAdd', member => {
   channel.send(`${member} Bienvenido/a a ${server}, espero que disfrutes junto a la comunidad`)
 })
 
+bot.on('guildCreate', guild => {
+  firebaseApp.database().ref(`/guilds/${guild.id}`).set({
+    id: guild.id,
+    name: guild.name,
+    ownerID: guild.ownerID,
+    iconURL: guild.iconURL,
+    active: true
+  })
+})
+
+bot.on('guildDelete', guild => {
+  firebaseApp.database().ref(`/guilds/${guild.id}`).update({
+    active: false
+  })
+})
+
 bot.login(process.env.DISCORD_TOKEN)
