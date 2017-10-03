@@ -13,7 +13,8 @@ bot.registry
   .registerGroups([
     ['fun', 'Comandos divertidos'],
     ['information', 'información de diversas fuentes'],
-    ['settings', 'Comandos de configuración del servidor']
+    ['settings', 'Comandos de configuración del servidor'],
+    ['profile', 'User profile related commands']
   ])
   .registerCommandsIn(path.join(__dirname, 'commands'))
 
@@ -73,7 +74,8 @@ bot.on('message', async (message) => {
     if (!lastMessageTimestamp) {
       db.ref(userRef).update({
         lastMessageTimestamp: lastMessage.createdTimestamp,
-        xp: 0
+        xp: 0,
+        points: 0
       })
     } else {
       if (lastMessage.createdTimestamp >= lastMessageTimestamp + coolDownMiliseconds) {
